@@ -2,7 +2,7 @@
     "name": "freegli/apns",
     "description": "Apple Push Notification Service Component",
     "require": {
-        "php": ">=5.3.2",
+        "php": ">=5.3.2"
     },
     "license": "CC-BY-SA-3.0",
     "keywords": ["iTunes", "apple", "APNs"],
