@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This work is license under
+ * Creative Commons Attribution-ShareAlike 3.0 Unported License
+ * http://creativecommons.org/licenses/by-sa/3.0/
+ */
+
 namespace Freegli\Component\APNs;
 
 use Freegli\Component\APNs\Exception\ConvertException;
@@ -8,6 +14,7 @@ use Freegli\Component\APNs\Exception\LengthException;
 /**
  * Feedback tuple.
  *
+ * @author Xavier Briand <xavierbriand@gmail.com>
  * @link http://developer.apple.com/library/ios/#documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingWIthAPS/CommunicatingWIthAPS.html
  */
 class Feedback

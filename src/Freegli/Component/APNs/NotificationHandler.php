@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This work is license under
+ * Creative Commons Attribution-ShareAlike 3.0 Unported License
+ * http://creativecommons.org/licenses/by-sa/3.0/
+ */
+
 namespace Freegli\Component\APNs;
 
 use Freegli\Component\APNs\Exception\ExceptionInterface;
 use Freegli\Component\APNs\Exception\LengthException;
 use Freegli\Component\APNs\Exception\WriteException;
 
+/**
+ * @author Xavier Briand <xavierbriand@gmail.com>
+ */
 class NotificationHandler extends BaseHandler
 {
     const PRODUCTION_HOST = 'gateway.push.apple.com';

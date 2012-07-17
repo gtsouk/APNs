@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This work is license under
+ * Creative Commons Attribution-ShareAlike 3.0 Unported License
+ * http://creativecommons.org/licenses/by-sa/3.0/
+ */
+
 namespace Freegli\Tests\Component\APNs;
 
 use Freegli\Component\APNs\Notification;
 
+/**
+ * @author Xavier Briand <xavierbriand@gmail.com>
+ */
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     public function testToBinary()

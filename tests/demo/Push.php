@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This work is license under
+ * Creative Commons Attribution-ShareAlike 3.0 Unported License
+ * http://creativecommons.org/licenses/by-sa/3.0/
+ */
+
+/*
+ * @author Xavier Briand <xavierbriand@gmail.com>
+ */
+
 use Freegli\Component\APNs;
 use Freegli\Component\APNs\Exception\ExceptionInterface;
 
@@ -10,7 +20,6 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext)
     throw new \Exception("$errstr in $errfile at line $errline", $errno);
 }
 set_error_handler('handleError');
-
 
 $notification = new APNs\Notification();
 $notification->setPayload(array(
@@ -40,3 +49,4 @@ while ($i++ < $limit) {
         }
     }
 }
+
