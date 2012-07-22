@@ -4,6 +4,11 @@
     "require": {
         "php": ">=5.3.2"
     },
+    "autoload": {
+        "psr-0": {
+            "Freegli\\Component\\APNs": "src/"
+        }
+    },
     "license": "CC-BY-SA-3.0",
     "keywords": ["iTunes", "apple", "APNs"],
     "authors": [
