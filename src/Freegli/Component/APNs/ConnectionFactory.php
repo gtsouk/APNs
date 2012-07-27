@@ -53,6 +53,8 @@ class ConnectionFactory
             throw new ConnectionException($errstr, $errno);
         }
 
+        stream_set_blocking($connection, 0);
+
         return $connection;
     }
 }
