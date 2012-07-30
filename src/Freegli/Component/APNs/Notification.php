@@ -68,7 +68,7 @@ class Notification
                     $this->command,
                     $this->identifier,
                     $this->expiry->format('U'),
-                    strlen($this->deviceToken),
+                    32,
                     $this->deviceToken
                 )
                 .pack('n', strlen($this->formatPayload()))
