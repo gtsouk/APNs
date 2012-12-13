@@ -15,13 +15,31 @@ use Freegli\Component\APNs\ConnectionFactory;
  */
 class ConnectionFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstructor()
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testGivinNoProfileShouldThrowAnException()
     {
         $cf = new ConnectionFactory();
         $connection = $cf->getConnection('tcp://localhost:80');
+    }
 
-        $this->assertTrue(is_resource($connection));
-        $this->assertFalse(feof($connection));
-        fclose($connection);
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGivenAnUnreadableCertificateShouldThrowAnException()
+    {
+        $cf = new ConnectionFactory();
+        $cf->addProfile('foo', 'bar');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testWhenRequestingAnUndefinedProfileShouldThrowAnException()
+    {
+        $cf = new ConnectionFactory();
+        $cf->addProfile('foo', __file__);
+        $cf->getConnection('tcp://localhost:80', 'bar');
     }
 }

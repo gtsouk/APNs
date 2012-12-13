@@ -15,13 +15,36 @@ use Freegli\Component\APNs\Exception\ConnectionException;
  */
 class ConnectionFactory
 {
-    private $certificatPath;
-    private $certificatPassPhrase;
+    protected $profiles;
 
-    public function __construct($certificatPath = null, $certificatPassPhrase = null)
+    public function __construct()
     {
-        $this->certificatPath       = $certificatPath;
-        $this->certificatPassPhrase = $certificatPassPhrase;
+        $this->profiles = array();
+    }
+
+    /**
+     * Add a profile (key path and pass phrase).
+     *
+     * @param string $name
+     * @param string $certificatePath
+     * @param string $certificatePassPhrase
+     *
+     * @return ConnectionFactory
+     *
+     * @throws InvalidArgumentException
+     */
+    public function addProfile($name, $certificatePath, $certificatePassPhrase = null)
+    {
+        if (!is_readable($certificatePath)) {
+            throw new \InvalidArgumentException(sprintf('Unable to read certificate in "%s"', $certificatePath));
+        }
+
+        $this->profiles[$name] = array(
+            'path'       => $certificatePath,
+            'passPhrase' => $certificatePassPhrase,
+        );
+
+        return $this;
     }
 
     /**
@@ -33,15 +56,16 @@ class ConnectionFactory
      *
      * @throws ConnectionException
      */
-    public function getConnection($url)
+    public function getConnection($url, $profile = null)
     {
         $streamContext = stream_context_create();
 
-        if ($this->certificatPath) {
-            stream_context_set_option($streamContext, 'ssl', 'local_cert', $this->certificatPath);
-        }
-        if ($this->certificatPassPhrase) {
-            stream_context_set_option($streamContext, 'ssl', 'passphrase', $this->certificatPassPhrase);
+        $profile = $this->getProfile($profile);
+
+        stream_context_set_option($streamContext, 'ssl', 'local_cert', $profile['path']);
+
+        if (isset($profile['passPhrase'])) {
+            stream_context_set_option($streamContext, 'ssl', 'passphrase', $profile['passPhrase']);
         }
 
         try {
@@ -56,5 +80,32 @@ class ConnectionFactory
         stream_set_blocking($connection, 0);
 
         return $connection;
+    }
+
+    /**
+     * Get profile by name or the first one.
+     *
+     * @param string $name
+     *
+     * @return array
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     */
+    protected function getProfile($name = null)
+    {
+        if (empty($this->profiles)) {
+            throw new \RuntimeException('No APNS profile defined');
+        }
+
+        if ($name) {
+            if (isset($this->profiles[$name])) {
+                return $this->profiles[$name];
+            } else {
+                throw new \InvalidArgumentException(sprintf('Undefined APNS profile "%s"', $name));
+            }
+        }
+
+        return reset($this->profiles);
     }
 }

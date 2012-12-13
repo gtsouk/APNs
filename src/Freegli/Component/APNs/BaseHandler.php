@@ -16,6 +16,7 @@ abstract class BaseHandler
     const PROTOCOL = 'ssl';
 
     private $connectionFactory;
+    private $profile;
 
     /**
      * @var resource
@@ -27,9 +28,10 @@ abstract class BaseHandler
      */
     private $url;
 
-    public function __construct($connectionFactory, $debug = false)
+    public function __construct($connectionFactory, $profile = null, $debug = false)
     {
         $this->connectionFactory = $connectionFactory;
+        $this->profile           = $profile;
 
         $this->url = sprintf('%s://%s:%s',
             static::PROTOCOL,
@@ -49,7 +51,7 @@ abstract class BaseHandler
     public function getResource()
     {
         if (!$this->resource) {
-            $this->resource = $this->connectionFactory->getConnection($this->url);
+            $this->resource = $this->connectionFactory->getConnection($this->url, $this->profile);
         }
 
         return $this->resource;
