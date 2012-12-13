@@ -26,7 +26,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
     {
         $notification = new Notification();
         $notification->setIdentifier(2);
-        $notification->setExpiry(new \DateTime('2010-01-13 00:00:00'));
+        $notification->setExpiry(new \DateTime('2012-12-12T12:12:12-05:00'));
         $notification->setDeviceToken('4333526ff2e8b19730cab08c7a14f8b59e80aed473e06d6a2faa95bd82c3556e');
         $notification->setPayload(array(
             'aps' => array(
